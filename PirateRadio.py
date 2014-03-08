@@ -43,7 +43,7 @@ def build_file_list():
 		folders.sort()
 		files.sort()
 		for filename in files:
-			if re.search(".(aac|mp3|wav|flac|m4a)$", filename) != None:
+			if re.search(".(aac|mp3|wav|flac|m4a|pls|m3u)$", filename) != None: 
 				file_list.append(os.path.join(root, filename))
 	return file_list
 
@@ -53,14 +53,17 @@ def play_songs(file_list):
 	print("Playing songs to frequency ", str(frequency))
 	print("Shuffle is " + on_off[shuffle])
 	print("Repeat All is " + on_off[repeat_all])
-	#print("Stereo playback is " + on_off[play_stereo])
+	# print("Stereo playback is " + on_off[play_stereo])
 	
 	if shuffle == True:
 		random.shuffle(file_list)
 	with open(os.devnull, "w") as dev_null:
 		for filename in file_list:
 			print("Playing ",filename)
-			subprocess.call(["ffmpeg","-i",filename,"-f","s16le","-acodec","pcm_s16le","-ac", "2" if play_stereo else "1" ,"-ar","44100","-"],stdout=music_pipe_w, stderr=dev_null)
+			if re.search(".(pls|m3u)$", filename) != None:
+				subprocess.call(["mpg123","-f","57000","-s","-@",filename],stdout=music_pipe_w, stderr=dev_null)
+			else:
+				subprocess.call(["ffmpeg","-i",filename,"-f","s16le","-acodec","pcm_s16le","-ac", "2" if play_stereo else "1" ,"-ar","44100","-"],stdout=music_pipe_w, stderr=dev_null)
 
 
 
