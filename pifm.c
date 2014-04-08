@@ -502,7 +502,7 @@ public:
             for (int i=0; i<consumable; i++) {
                 state = (state+1) %8;
                 // equation straight from wikipedia...
-                buffer[i] = ((left[i]+right[i])/2 + (left[i]-right[i])/2*sinLut[state*2])*0.9 + 0.1*sinLut[state]; 
+                buffer[i] = ((left[i]+right[i])/2 + (left[i]-right[i])/2*sinLut[state*2])*0.83 + 0.17*sinLut[state]; 
             }
             next->consume(buffer, consumable);
             
