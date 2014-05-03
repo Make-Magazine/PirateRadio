@@ -21,6 +21,8 @@ repeat_all = False
 merge_audio_in = False
 play_stereo = True
 
+MUSIC_DIR = "/pirateradio"
+
 music_pipe_r,music_pipe_w = os.pipe()
 microphone_pipe_r,microphone_pipe_w = os.pipe()
 
@@ -39,7 +41,7 @@ def main():
 
 def build_file_list():
 	file_list = []
-	for root, folders, files in os.walk("/pirateradio"):
+	for root, folders, files in os.walk(MUSIC_DIR):
 		folders.sort()
 		files.sort()
 		for filename in files:
