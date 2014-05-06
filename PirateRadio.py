@@ -14,12 +14,14 @@ import time
 
 fm_process = None
 on_off = ["off", "on"]
+config_location = "/pirateradio/pirateradio.conf"
 
 frequency = 87.9
 shuffle = False
 repeat_all = False
 merge_audio_in = False
 play_stereo = True
+music_dir = "/pirateradio"
 
 music_pipe_r,music_pipe_w = os.pipe()
 microphone_pipe_r,microphone_pipe_w = os.pipe()
@@ -39,7 +41,7 @@ def main():
 
 def build_file_list():
 	file_list = []
-	for root, folders, files in os.walk("/pirateradio"):
+	for root, folders, files in os.walk(music_dir):
 		folders.sort()
 		files.sort()
 		for filename in files:
@@ -80,9 +82,10 @@ def read_config():
 	global shuffle
 	global repeat_all
 	global play_stereo
+	global music_dir
 	try:
 		config = configparser.ConfigParser()
-		config.read("/pirateradio/pirateradio.config")
+		config.read(config_location)
 		
 	except:
 		print("Error reading from config file.")
@@ -91,6 +94,7 @@ def read_config():
 		frequency = config.get("pirateradio",'frequency')
 		shuffle = config.getboolean("pirateradio",'shuffle',fallback=False)
 		repeat_all = config.getboolean("pirateradio",'repeat_all', fallback=False)
+		music_dir = config.get("pirateradio", 'music_dir', fallback="/pirateradio")
 
 def parse_pls(src, titleindex):
 	# breaking up the pls file in separate strings
