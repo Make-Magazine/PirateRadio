@@ -45,7 +45,7 @@ def build_file_list():
 		folders.sort()
 		files.sort()
 		for filename in files:
-			if re.search(".(aac|mp3|wav|flac|m4a|pls|m3u)$", filename) != None: 
+			if re.search(".(aac|mp3|wav|flac|m4a|ogg|pls|m3u)$", filename) != None: 
 				file_list.append(os.path.join(root, filename))
 	return file_list
 
