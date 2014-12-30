@@ -2,15 +2,19 @@
 # Pirate Radio
 # Author: Wynter Woods (Make Magazine)
 
-import os
-import sys
-import subprocess
-import configparser
-import re
-import random
-import threading
-import time
-
+try:	# the following tests for a python3.x module
+	import configparser
+except: # if the module isn't found, we're likely running python2.x and will just trick it into working
+	import ConfigParser as configparser
+finally:
+	import re
+	import re
+	import random
+	import sys
+	import os
+	import threading
+	import time
+	import subprocess
 
 fm_process = None
 on_off = ["off", "on"]
