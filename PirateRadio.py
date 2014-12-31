@@ -2,19 +2,18 @@
 # Pirate Radio
 # Author: Wynter Woods (Make Magazine)
 
-try:	# the following tests for a python3.x module
+import os
+import sys
+import subprocess
+try:
 	import configparser
-except: # if the module isn't found, we're likely running python2.x and will just trick it into working
+except:
 	import ConfigParser as configparser
-finally:
-	import re
-	import re
-	import random
-	import sys
-	import os
-	import threading
-	import time
-	import subprocess
+import re
+import random
+import threading
+import time
+
 
 fm_process = None
 on_off = ["off", "on"]
@@ -94,11 +93,27 @@ def read_config():
 	except:
 		print("Error reading from config file.")
 	else:
-		play_stereo = config.get("pirateradio", 'stereo_playback', fallback=True)
-		frequency = config.get("pirateradio",'frequency')
-		shuffle = config.getboolean("pirateradio",'shuffle',fallback=False)
-		repeat_all = config.getboolean("pirateradio",'repeat_all', fallback=False)
-		music_dir = config.get("pirateradio", 'music_dir', fallback="/pirateradio")
+        # This resembles the fallback argument, not present in python 2
+		try:
+			play_stereo = config.get("pirateradio", 'stereo_playback')
+		except:
+			pass
+		try:
+			frequency = config.get("pirateradio",'frequency')
+		except:
+			pass
+		try:
+			shuffle = config.getboolean("pirateradio",'shuffle')
+		except:
+			pass
+		try:
+			repeat_all = config.getboolean("pirateradio",'repeat_all')
+		except:
+			pass
+		try:
+			music_dir = config.get("pirateradio", 'music_dir')
+		except:
+			pass
 
 def parse_pls(src, titleindex):
 	# breaking up the pls file in separate strings
