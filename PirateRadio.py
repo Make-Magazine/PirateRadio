@@ -58,7 +58,7 @@ def build_file_list():
 
 
 def play_songs(file_list):
-    print("Playing songs to frequency ", str(frequency))
+    print("Playing songs to frequency {0}".format(str(frequency)))
     print("Shuffle is " + on_off[shuffle])
     print("Repeat All is " + on_off[repeat_all])
     # print("Stereo playback is " + on_off[play_stereo])
@@ -67,7 +67,7 @@ def play_songs(file_list):
         random.shuffle(file_list)
     with open(os.devnull, "w") as dev_null:
         for filename in file_list:
-            print("Playing ", filename)
+            print("Playing {0}".format(filename))
             global ffmpeg
             if re.search(".pls$", filename) is not None:
                 streamurl = parse_pls(filename, 1)
